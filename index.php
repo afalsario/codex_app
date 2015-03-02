@@ -2,41 +2,46 @@
 <html>
 <head>
 	<title>Codex App</title>
-	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 </head>
 <body>
 <ol>
 <?php
 
-$thePage = file_get_contents('https://developer.wordpress.org/reference/functions/page/263/');
+// This gets the contents of a page in the WP codex containing function references and definitions
+$thePage = file_get_contents('https://developer.wordpress.org/reference/functions/page/138/');
+
+// This returns a text-only version of the page, similar to "View Source"
 $thePage = htmlspecialchars($thePage);
 
+// These lines will trim code before and after the block of content that contains terms and definitions
 $start = strpos($thePage, "article");
 $end = strpos($thePage, htmlspecialchars("<nav"));
-
 $newString = substr($thePage, $start, $end - $start );
 
-echo $newString;
-
+// Explodes the new trimmed string to isolate individual blocks of code for each WP function
 $stringArray = explode(htmlspecialchars('/">'), $newString);
-
-
-echo '<pre>' . var_export($stringArray, true) . '</pre>';
 
 $number = count($stringArray);
 
-echo "Number of items in the array: " . $number;
-
-echo '<br><br>';
-
+// Removes the first item in the array which contains excess code
 array_shift($stringArray);
 
+// This code isolates the function name from the rest of the code
 foreach ($stringArray as $key => $value) {
 	$endPos = strpos($value, htmlspecialchars("<"));
 
 	$functionName = substr($value, 0, $endPos - 0);
 
 	echo "<br>" . $functionName;
+
+	$defStart = strpos($value, htmlspecialchars("</b>")) + 10;
+	$defEnd = strpos($value, htmlspecialchars("</p>"));
+
+	$definition = substr($value, $defStart, $defEnd - $defStart);
+
+	echo $defStart;
+
+	echo "<br>" . $definition;
 }
  
 
