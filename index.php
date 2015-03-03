@@ -1,27 +1,27 @@
 <?php
-try {
-	//-------------1. Establish DB Connection
-	$dbc = new PDO('mysql:host=localhost;dbname=wp_codex_functions', 'root', 'root');
+// try {
+// 	//-------------1. Establish DB Connection
+// 	$dbc = new PDO('mysql:host=localhost;dbname=wp_codex_functions', 'root', 'root');
 
-	// Tell PDO to throw exceptions on error
-	$dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// 	// Tell PDO to throw exceptions on error
+// 	$dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-	$sql = "CREATE TABLE functions (
-		id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-		function VARCHAR (30) NOT NULL,
-		definition VARCHAR(250) NOT NULL,
-		reg_date TIMESTAMP
+// 	$sql = "CREATE TABLE functions (
+// 		id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+// 		function VARCHAR (30) NOT NULL,
+// 		definition VARCHAR(250) NOT NULL,
+// 		reg_date TIMESTAMP
 
-	)";
+// 	)";
 
-	$dbc->exec($sql);
-	echo "Table functions created successfully.";
-} catch(PDOEXCEPTION $e) {
-	echo $sql . "<br>" . $e->getMessage();
-}
+// 	$dbc->exec($sql);
+// 	echo "Table functions created successfully.";
+// } catch(PDOEXCEPTION $e) {
+// 	echo $sql . "<br>" . $e->getMessage();
+// }
 
-$dbc = null;
+// $dbc = null;
 
 for($i = 1; $i < 264; $i++){
 
@@ -99,29 +99,29 @@ foreach ($stringArray as $key => $value) {
 
 	$definition = htmlspecialchars_decode($definition);
 
-	try {	
-		//-------------1. Establish DB Connection
-		$dbc = new PDO('mysql:host=localhost;dbname=wp_codex_functions', 'root', 'root');
+	// try {	
+	// 	//-------------1. Establish DB Connection
+	// 	$dbc = new PDO('mysql:host=localhost;dbname=wp_codex_functions', 'root', 'root');
 
-		// Tell PDO to throw exceptions on error
-		$dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	// 	// Tell PDO to throw exceptions on error
+	// 	$dbc->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 
-		$stmt = $dbc->prepare("INSERT INTO Functions(function, definition)
-			VALUES (:function, :definition)");
+	// 	$stmt = $dbc->prepare("INSERT INTO Functions(function, definition)
+	// 		VALUES (:function, :definition)");
 
-		$stmt->bindParam(':function', $functionName, PDO::PARAM_STR, 100);
-		$stmt->bindParam(':definition', $definition, PDO::PARAM_STR, 100);
+	// 	$stmt->bindParam(':function', $functionName, PDO::PARAM_STR, 100);
+	// 	$stmt->bindParam(':definition', $definition, PDO::PARAM_STR, 100);
 
-		if($stmt->execute())
-		{
-			echo "Success!!!";
-			$dbc= null;
-		}
+	// 	if($stmt->execute())
+	// 	{
+	// 		echo "Success!!!";
+	// 		$dbc= null;
+	// 	}
 
-	} catch(PDOEXCEPTION $e) {
-		trigger_error("Error occured while trying to insert into the DB:" . $e->getMessage(), E_USER_ERROR);
-	}
+	// } catch(PDOEXCEPTION $e) {
+	// 	trigger_error("Error occured while trying to insert into the DB:" . $e->getMessage(), E_USER_ERROR);
+	// }
 
 	echo "<dt>" . $functionName . "</dt><br>";
 	echo "<dd>" . htmlspecialchars_decode($definition) . "</dd><br>";
